@@ -48,7 +48,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   // Check validation
   if (!isValid) {
     // If any errors, send 400 with errors object
-    return res.json.status(400).json(errors);
+    return res.status(400).json(errors);
   }
 
   const newPost = new Post({
@@ -78,7 +78,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
           post.remove().then(() => res.json({ success: true }));
         })
         .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
-    })
+    });
 });
 
 // @route   POST api/posts/like/:id
@@ -138,7 +138,7 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
   // Check validation
   if (!isValid) {
     // If any errors, send 400 with errors object
-    return res.json.status(400).json(errors);
+    return res.status(400).json(errors);
   }
 
   Post.findById(req.params.id)
@@ -148,13 +148,13 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
         name: req.body.name,
         avatar: req.body.avatar,
         user: req.user.id
-      }
+      };
 
       // Add to comments array
       post.comments.unshift(newComment);
 
       // Save
-      post.save().then(post => res.json(post))
+      post.save().then(post => res.json(post));
     })
     .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 });

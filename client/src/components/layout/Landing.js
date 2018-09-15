@@ -29,13 +29,13 @@ class Landing extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 Landing.propTypes = {
   auth: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
   auth: state.auth
